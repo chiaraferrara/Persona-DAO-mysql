@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 public class Person {
     //private List<Person> list = new ArrayList<Person>();
@@ -57,6 +58,8 @@ public class Person {
 
     public String getEmail() {
         return email;
+        setChanged();
+        notifyObservers(nuovaEmail);
     }
 
     public void setEmail(String email) {

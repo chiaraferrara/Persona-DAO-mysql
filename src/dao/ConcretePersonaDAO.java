@@ -101,7 +101,7 @@ public abstract class ConcretePersonaDAO implements PersonaDAO {
         System.out.println("Qual è la nuova mail?");
         Scanner nm = new Scanner(System.in);
         String nuovaMail = nm.nextLine();
-
+        persona.setEmail(nuovaMail);
         try(Connection connection = connection_db.getConnectData();
             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, nuovaMail);
