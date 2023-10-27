@@ -1,11 +1,7 @@
 package model;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 
 public class Person {
-    //private List<Person> list = new ArrayList<Person>();
     private int id;
     private String nome;
     private String cognome;
@@ -13,7 +9,6 @@ public class Person {
 
     private String email;
     private String tel;
-
 
     public Person(int id, String nome, String cognome, int eta, String email, String tel) {
         this.id = id;
