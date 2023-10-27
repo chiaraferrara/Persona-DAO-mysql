@@ -137,7 +137,7 @@ public abstract class ConcretePersonaDAO implements PersonaDAO {
             if(numAggiornato>0){
                 System.out.println("Numero aggiornato con successo");
             }else{
-                System.out.println("C'è stato un errore nell'aggiornamento della mail.");
+                System.out.println("C'è stato un errore nell'aggiornamento del numero.");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

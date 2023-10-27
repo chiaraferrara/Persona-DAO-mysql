@@ -1,9 +1,7 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Person {
+//https://italiancoders.it/builder-pattern-un-ottima-alternativa-al-costruttore/
+public class PersonBuilder {
     //private List<Person> list = new ArrayList<Person>();
     private int id;
     private String nome;
@@ -13,61 +11,41 @@ public class Person {
     private String email;
     private String tel;
 
+private PersonBuilder(int id){
+    this.id = id;
+}
+public static PersonBuilder newBuilder(int id){
+    return new PersonBuilder(id);
+}
 
-    public Person(int id, String nome, String cognome, int eta, String email, String tel) {
-        this.id = id;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.eta = eta;
-        this.email = email;
-        this.tel = tel;
-    }
+public PersonBuilder nome(String nome){
+    this.nome = nome;
+    return this;
+}
 
-    public int getId() {
-        return id;
-    }
+public PersonBuilder cognome(String cognome){
+    this.cognome = cognome;
+    return this;
+}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+public PersonBuilder eta(int eta){
+    this.eta = eta;
+    return this;
+}
 
-    public String getNome() {
-        return nome;
-    }
+public PersonBuilder email(String email){
+    this.email = email;
+    return this;
+}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+public PersonBuilder tel(String tel){
+    this.tel = tel;
+    return this;
+}
 
-    public String getCognome() {
-        return cognome;
-    }
+public Person build(){
+    return new Person(id, nome, cognome, eta, email, tel);
 
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
+}
 
-    public int getEta() {
-        return eta;
-    }
-
-    public void setEta(int eta) {
-        this.eta = eta;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
 }

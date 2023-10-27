@@ -1,5 +1,7 @@
 
 import dao.ConcretePersonaDAO;
+import model.Person;
+import model.PersonBuilder;
 
 import java.util.Scanner;
 
@@ -42,5 +44,10 @@ public class Main {
 
             }
         }
+        PersonBuilder personBuilder = PersonBuilder.newBuilder(4)
+                .nome("Mario")
+                .cognome("Rossi")
+                .eta(44)
+                .tel("302239432");
     }
 }
