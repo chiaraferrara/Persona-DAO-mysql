@@ -1,9 +1,14 @@
 package dao;
 import datasource.ConnectionDBH;
+import model.Person;
+import model.PersonBuilder;
 
 import java.sql.*;
-import java.io.IOException;
 import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 public abstract class ConcretePersonaDAO implements PersonaDAO {
 
@@ -35,7 +40,7 @@ public abstract class ConcretePersonaDAO implements PersonaDAO {
             System.out.println("telefono: ");
             Scanner tl = new Scanner(System.in);
             String tel = tl.nextLine();
-            String query = "INSERT INTO persona (id, nome, cognome, età, email, tel) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO persona (id, nome, cognome, eta, email, tel) VALUES (?, ?, ?, ?, ?, ?)";
 
             try (Connection connection = connection_db.getConnectData();
                  PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -63,7 +68,7 @@ public abstract class ConcretePersonaDAO implements PersonaDAO {
 
 
     public static void readPersona() {
-        String url = "jdbc:mysql://localhost:3306/persona";
+        String url = "jdbc:mysql://localhost:3306/mysql";
         String username = "root";
         String password = "";
         try {
@@ -97,11 +102,13 @@ public abstract class ConcretePersonaDAO implements PersonaDAO {
                 "Inserisci l'id della persona: ");
         Scanner i = new Scanner(System.in);
         int id = i.nextInt();
+        Person person = new PersonBuilder(id).build();
         String query = "UPDATE persona SET email = ? WHERE id = ?";
         System.out.println("Qual è la nuova mail?");
         Scanner nm = new Scanner(System.in);
         String nuovaMail = nm.nextLine();
-        persona.setEmail(nuovaMail);
+
+        person.setEmail(nuovaMail);
         try(Connection connection = connection_db.getConnectData();
             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, nuovaMail);
@@ -109,6 +116,7 @@ public abstract class ConcretePersonaDAO implements PersonaDAO {
             int mailAggiornata = preparedStatement.executeUpdate();
             if(mailAggiornata>0){
                 System.out.println("E-mail aggiornata con successo");
+                sendEmailNotification(nuovaMail);
             }else{
                 System.out.println("C'è stato un errore nell'aggiornamento della mail.");
             }
@@ -172,5 +180,43 @@ public abstract class ConcretePersonaDAO implements PersonaDAO {
             throw new RuntimeException(e);
         }
 
+    }
+
+
+
+    private static void sendEmailNotification(String nuovaMail) {
+
+
+        final String mailAdmin = "imjavaing@gmail.it";
+        final String username = "iamjavaing@gmail.com";
+        final String password = "vvtt dgui yacz zfgy";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true"); // abilita TLS
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587"); // porta TLS di Google
+
+        Session session = Session.getInstance(props,
+                new Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(mailAdmin));
+            message.setSubject("Aggiornamento e-mail");
+            message.setText("La tua e-mail è stata aggiornata: " + nuovaMail);
+
+            Transport.send(message);
+
+            System.out.println("Email inviata a " + mailAdmin);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

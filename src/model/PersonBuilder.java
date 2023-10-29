@@ -11,7 +11,7 @@ public class PersonBuilder {
     private String email;
     private String tel;
 
-private PersonBuilder(int id){
+public PersonBuilder(int id){
     this.id = id;
 }
 public static PersonBuilder newBuilder(int id){

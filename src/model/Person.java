@@ -53,9 +53,9 @@ public class Person {
 
     public String getEmail() {
         return email;
-        setChanged();
-        notifyObservers(nuovaEmail);
     }
+
+
 
     public void setEmail(String email) {
         this.email = email;

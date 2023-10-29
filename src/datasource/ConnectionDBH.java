@@ -10,7 +10,7 @@ public class ConnectionDBH {
     private Connection connectData;
 
     public static Connection getConnectData() {
-        String url = "jdbc:mysql://localhost:3306/persona";
+        String url = "jdbc:mysql://localhost:3306/mysql";
         String username = "root";
         String password = "";
         Connection connectData = null;
