@@ -9,7 +9,7 @@ email o telefono), leggere la lista di Persone contenute nel database.<BR>
 ● Nel momento in cui il “Client”/Main cambia l’email o il numero di telefono della
 persona salvata nel database, un’email di notifica all’amministratore (ovvero voi
 stessi, alla vostra casella di posta) deve essere inviata per notificare l’evento.
-Questo punto va implementato utilizzando il Design Pattern “Observer”.
+Questo punto va implementato utilizzando il Design Pattern “Observer”.<br>
 ● L’UML da consegnare deve essere solo del DAO.
 
 Per lo storage dei dati rappresentati: MySQL.
